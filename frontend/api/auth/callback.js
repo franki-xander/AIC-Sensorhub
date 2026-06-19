@@ -4,7 +4,7 @@
 // in the database, and redirects to the frontend with an access token
 // in the URL fragment.
 
-import db from "../_utils/db.js";
+import {db} from "../_utils/db.js";
 import {
   issueAccessToken,
   issueRefreshToken,
