@@ -1,8 +1,13 @@
 {
+  "version": 2,
   "cleanUrls": true,
   "trailingSlash": false,
+  "rewrites": [
+    { "source": "/api/data", "destination": "/api/index.js?route=data" },
+    { "source": "/api/pages", "destination": "/api/index.js?route=pages" }
+  ],
   "functions": {
-    "api/**/*.js": {
+    "api/index.js": {
       "maxDuration": 30
     }
   }

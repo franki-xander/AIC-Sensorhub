@@ -1,21 +1,7 @@
-// api/auth/register.js
-// Creates a new email/password account.
 
-import bcrypt from "bcrypt";
-import db from "../_utils/db.js";
-import {
-  issueAccessToken,
-  issueRefreshToken,
-  setRefreshCookie,
-} from "../_utils/auth-helpers.js";
-
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed." });
-  }
-
+// POST /auth/register
+router.post("/register", async (req, res) => {
   const { email, password, display_name } = req.body;
-
   if (!email || !password) {
     return res.status(400).json({ error: "Email and password are required." });
   }
@@ -30,19 +16,16 @@ export default async function handler(req, res) {
        VALUES ($1, $2, $3) RETURNING *`,
       [email, display_name || email.split("@")[0], hash]
     );
-
     const user         = result.rows[0];
     const accessToken  = issueAccessToken(user);
     const refreshToken = await issueRefreshToken(user.id);
     setRefreshCookie(res, refreshToken);
-
-    res.status(201).json({ access_token: accessToken, status: user.account_status });
-
+    res.json({ access_token: accessToken, status: user.account_status });
   } catch (err) {
-    if (err.code === "23505") {
+    if (err.code === "23505") { // unique violation
       return res.status(409).json({ error: "An account with this email already exists." });
     }
     console.error("Register error:", err);
     res.status(500).json({ error: "Registration failed. Please try again." });
   }
-}
+});
