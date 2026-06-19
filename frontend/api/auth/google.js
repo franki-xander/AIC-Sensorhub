@@ -1,15 +1,32 @@
-// Inside api/auth/google.js (Vercel style - FIXED)
+// api/auth/google.js
 export default async function handler(req, res) {
-  // 1. If you want to restrict it to GET requests:
+  // Enforce GET requests
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    // 2. Put your actual Google OAuth redirection logic here
-    // e.g., constructing the Google URL and calling res.redirect(url);
+    const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
+    
+    const options = {
+      redirect_uri: process.env.GOOGLE_CALLBACK_URL,
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      access_type: "offline",
+      response_type: "code",
+      prompt: "consent",
+      scope: [
+        "https://www.googleapis.com/auth/userinfo.profile",
+        "https://www.googleapis.com/auth/userinfo.email",
+      ].join(" "),
+    };
+
+    const qs = new URLSearchParams(options).toString();
+    
+    // Redirect the user directly to Google's OAuth screen
+    return res.redirect(`${rootUrl}?${qs}`);
     
   } catch (error) {
+    console.error("Google Auth Error:", error);
     return res.status(500).json({ error: error.message });
   }
 }
