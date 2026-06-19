@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIC Sensorhub — Setup</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__brand">AIC <span>Sensorhub</span></div>
+  <nav class="site-header__nav">
+    <button id="logout-btn" class="btn btn--ghost">Sign Out</button>
+  </nav>
+</header>
+
+<div class="container--narrow" style="padding-top: 2.5rem;">
+
+  <div class="page-header" style="flex-direction: column; align-items: flex-start;">
+    <div class="page-header__title">Connect Your <span>Data Source</span></div>
+    <p class="page-header__subtitle">
+      Follow these steps to link your Google Sheet. This takes about 5 minutes.
+      You can re-run this wizard at any time to switch to a different sheet.
+    </p>
+  </div>
+
+  <!-- STEP 1: Create Google Sheet -->
+  <div class="wizard-step" id="step-1">
+    <div class="wizard-step__number">1</div>
+    <div class="wizard-step__title">Create (or open) your Google Sheet</div>
+    <div class="wizard-step__body">
+      <p>Open Google Sheets and create a new spreadsheet. Name it anything you like — for example, <strong>My Sensor Data</strong>.</p>
+      <p style="margin-top:0.75rem;">If you already have a sheet from a previous setup, you can use that instead — just make sure the Apps Script is still deployed (check Step 2).</p>
+      <div style="margin-top:1rem;">
+        <a href="https://sheets.new" target="_blank" class="btn btn--primary">Open Google Sheets →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: Deploy Apps Script -->
+  <div class="wizard-step" id="step-2">
+    <div class="wizard-step__number">2</div>
+    <div class="wizard-step__title">Install the Sensorhub Apps Script</div>
+    <div class="wizard-step__body">
+      <p>In your Google Sheet, open <strong>Extensions → Apps Script</strong>. Delete any existing code in the editor, then paste the code below:</p>
+
+      <div class="code-block" id="apps-script-code">
+        <!-- Populated by setup.js from the actual Code.gs content -->
+        //Loading script code...
+        <button class="code-block__copy">Copy</button>
+      </div>
+
+      <p style="margin-top:0.75rem;">After pasting, click <strong>Deploy → New Deployment</strong>. Configure it as:</p>
+      <ul style="margin: 0.5rem 0 0.5rem 1.25rem; color: var(--text-muted); font-size:0.875rem; line-height:2;">
+        <li>Type: <strong style="color:var(--text-main)">Web App</strong></li>
+        <li>Execute as: <strong style="color:var(--text-main)">Me</strong></li>
+        <li>Who has access: <strong style="color:var(--text-main)">Anyone</strong></li>
+      </ul>
+      <p>Click <strong>Deploy</strong>, authorize when prompted, then copy the Web App URL that appears.</p>
+    </div>
+  </div>
+
+  <!-- STEP 3: Paste URL and verify -->
+  <div class="wizard-step" id="step-3">
+    <div class="wizard-step__number">3</div>
+    <div class="wizard-step__title">Paste your Web App URL</div>
+    <div class="wizard-step__body">
+      <div class="form-stack" style="margin-top:0.5rem;">
+        <div class="form-group">
+          <label class="form-label" for="script-url-input">Apps Script Web App URL</label>
+          <input type="url" id="script-url-input" class="form-control"
+                 placeholder="https://script.google.com/macros/s/.../exec">
+          <p class="form-hint">The URL ends in <code>/exec</code></p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="drive-folder-input">
+            Google Drive Archive Folder ID
+            <span class="text-muted" style="font-weight:400;text-transform:none;">(optional)</span>
+          </label>
+          <input type="text" id="drive-folder-input" class="form-control"
+                 placeholder="Paste the folder ID from your Drive URL">
+          <p class="form-hint">
+            Open your Drive folder → copy the ID from the URL:
+            drive.google.com/drive/folders/<strong>THIS_PART</strong>
+          </p>
+        </div>
+
+        <div id="setup-error"   class="alert alert--error   hidden"></div>
+        <div id="setup-success" class="alert alert--success hidden"></div>
+
+        <button id="verify-btn" class="btn btn--primary">
+          Verify Connection
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: Flash your ESP32 -->
+  <div class="wizard-step" id="step-4">
+    <div class="wizard-step__number">4</div>
+    <div class="wizard-step__title">Flash your ESP32</div>
+    <div class="wizard-step__body">
+      <p>Download the firmware template below. Open it in Arduino IDE, fill in your WiFi credentials and the values shown, then flash to your device.</p>
+
+      <div style="background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius-md); padding:1rem; margin:1rem 0; font-family:var(--font-mono); font-size:0.82rem; line-height:2;">
+        <div><span style="color:var(--text-muted)">GOOGLE_SCRIPT_ID</span> = <span id="fw-script-id" style="color:var(--accent)">— paste your Script URL first —</span></div>
+        <div><span style="color:var(--text-muted)">SENSOR_ID</span> = <span style="color:var(--warning)">"my_sensor_1"</span> <span style="color:var(--text-dim)">// change to something unique</span></div>
+      </div>
+
+      <div style="display:flex; gap:0.75rem; flex-wrap:wrap; margin-top:0.5rem;">
+        <a href="/firmware/AIC_Sensorhub_Template.zip" download class="btn btn--primary">
+          Download Template Firmware
+        </a>
+        <a href="/firmware/AIC_Sensorhub_DHT22_Example.zip" download class="btn">
+          Download DHT22 Example
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: Waiting for first data -->
+  <div class="wizard-step" id="step-5">
+    <div class="wizard-step__number">5</div>
+    <div class="wizard-step__title">Waiting for your first reading</div>
+    <div class="wizard-step__body">
+      <p>Once your ESP32 is running, it will post its first reading within the configured interval. This page will update automatically.</p>
+      <div id="waiting-indicator" style="margin-top:1rem; color:var(--text-muted); font-size:0.875rem;">
+        Checking for data every 10 seconds...
+      </div>
+      <div id="first-data-success" class="alert alert--success hidden" style="margin-top:1rem;">
+        First reading received! Your sensor is live.
+      </div>
+      <div style="margin-top:1.25rem;">
+        <a href="/dashboard" class="btn btn--primary">Go to Dashboard →</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/setup.js"></script>
+</body>
+</html>

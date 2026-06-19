@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIC Sensorhub — Archives</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__brand">AIC <span>Sensorhub</span></div>
+  <nav class="site-header__nav">
+    <a href="/dashboard" class="btn btn--ghost">&larr; Dashboard</a>
+    <button id="logout-btn" class="btn btn--ghost">Sign Out</button>
+  </nav>
+</header>
+
+<div class="container" style="padding-top: 2rem;">
+
+  <div class="page-header">
+    <div>
+      <div class="page-header__title">Data <span>Archives</span></div>
+      <p class="page-header__subtitle">
+        Generate and download per-sensor CSV files from your Google Drive folder.
+      </p>
+    </div>
+    <button id="generate-btn" class="btn btn--primary">Generate New Archive</button>
+  </div>
+
+  <!-- ── Archive generation options ─────────────────────────────────────── -->
+  <div class="archive-options" id="generate-panel" style="display:none;">
+
+    <div class="archive-options__title">Archive Options</div>
+
+    <div class="radio-group" id="mode-radio-group">
+      <label class="radio-option is-selected" id="radio-incremental">
+        <input type="radio" name="archive-mode" value="incremental" checked>
+        <div>
+          <div class="radio-option__label">Incremental (recommended)</div>
+          <div class="radio-option__desc">Only saves new readings since the last archive. Fastest and avoids duplicates.</div>
+        </div>
+      </label>
+
+      <label class="radio-option" id="radio-from-date">
+        <input type="radio" name="archive-mode" value="from_date">
+        <div>
+          <div class="radio-option__label">From a specific date</div>
+          <div class="radio-option__desc">Saves all readings from the chosen date up to the latest reading.</div>
+          <input type="date" id="from-date-input" class="form-control"
+                 style="margin-top:0.5rem; max-width:200px;" disabled>
+        </div>
+      </label>
+
+      <label class="radio-option" id="radio-all">
+        <input type="radio" name="archive-mode" value="all">
+        <div>
+          <div class="radio-option__label">All data</div>
+          <div class="radio-option__desc">Exports the entire history for each sensor. May create large files.</div>
+        </div>
+      </label>
+    </div>
+
+    <!-- Sensor exclusion list -->
+    <div class="form-group" style="margin-top:1.25rem;">
+      <label class="form-label">Exclude Sensors (optional)</label>
+      <p class="form-hint" style="margin-bottom:0.5rem;">
+        Uncheck any sensors you do not want included in this archive run.
+      </p>
+      <div id="sensor-exclude-list" style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+        <span class="text-muted text-sm">Loading sensors...</span>
+      </div>
+    </div>
+
+    <div id="generate-error"   class="alert alert--error   hidden" style="margin-top:1rem;"></div>
+    <div id="generate-success" class="alert alert--success hidden" style="margin-top:1rem;"></div>
+
+    <div style="display:flex; gap:0.75rem; margin-top:1.25rem; flex-wrap:wrap;">
+      <button id="run-generate-btn" class="btn btn--primary">Run Archive</button>
+      <button id="cancel-generate-btn" class="btn">Cancel</button>
+    </div>
+  </div>
+
+  <!-- ── Archive file table ─────────────────────────────────────────────── -->
+  <div class="chart-card">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>File Name</th>
+          <th>Sensor</th>
+          <th>Size</th>
+          <th>Created</th>
+          <th style="text-align:right;">Download</th>
+        </tr>
+      </thead>
+      <tbody id="archive-table-body">
+        <tr>
+          <td colspan="5" style="text-align:center; color:var(--text-muted); padding:3rem 0;">
+            Loading archives...
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/archive.js"></script>
+</body>
+</html>

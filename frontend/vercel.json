@@ -1,0 +1,16 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/dashboard", "destination": "/dashboard.html" },
+    { "source": "/setup",     "destination": "/setup.html"     },
+    { "source": "/sensor",    "destination": "/sensor.html"    },
+    { "source": "/archive",   "destination": "/archive.html"   },
+    { "source": "/register",  "destination": "/register.html"  }
+  ],
+  "functions": {
+    "api/**/*.js": {
+      "maxDuration": 30
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "aic-sensorhub-frontend",
+  "version": "3.0.0",
+  "description": "AIC Sensorhub v3 — Frontend + Vercel Serverless API",
+  "private": true,
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.11.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

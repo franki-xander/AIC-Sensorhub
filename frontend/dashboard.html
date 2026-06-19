@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIC Sensorhub — Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__brand">AIC <span>Sensorhub</span></div>
+  <nav class="site-header__nav">
+    <a href="/archive" class="btn btn--ghost">Archives</a>
+    <a href="/setup"   class="btn btn--ghost">Change Sheet</a>
+    <button id="logout-btn" class="btn btn--ghost">Sign Out</button>
+  </nav>
+</header>
+
+<div class="container" style="padding-top: 2rem;">
+
+  <div class="page-header">
+    <div>
+      <div class="page-header__title">Sensor <span>Fleet</span></div>
+      <p class="page-header__subtitle" id="user-greeting">Loading your sensors...</p>
+    </div>
+    <button id="add-page-btn" class="btn btn--primary">+ Add Sensor Page</button>
+  </div>
+
+  <!-- Empty state shown when no pages exist yet -->
+  <div id="empty-state" class="hidden" style="text-align:center; padding: 5rem 0; color: var(--text-muted);">
+    <div style="font-size:3rem; margin-bottom:1rem;">📡</div>
+    <div style="font-size:1.1rem; font-weight:600; color:var(--text-main); margin-bottom:0.5rem;">No sensor pages yet</div>
+    <p style="font-size:0.9rem; max-width:360px; margin:0 auto 1.5rem;">
+      Add a sensor page for each device you want to monitor. Each page can show
+      different data fields from the same or different sensors.
+    </p>
+    <button class="btn btn--primary" onclick="document.getElementById('add-page-btn').click()">
+      Add Your First Sensor Page
+    </button>
+  </div>
+
+  <!-- Fleet grid populated by dashboard.js -->
+  <div class="fleet-grid" id="fleet-grid"></div>
+
+</div>
+
+<!-- =========================================================
+     ADD / EDIT SENSOR PAGE MODAL
+========================================================== -->
+<div id="page-modal-overlay" class="modal-overlay hidden">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="page-modal-title">
+
+    <div class="modal__header">
+      <span class="modal__title" id="page-modal-title">Add Sensor Page</span>
+      <button class="modal__close" data-close-modal="page-modal-overlay">&times;</button>
+    </div>
+
+    <div class="modal__body">
+      <div class="form-stack">
+
+        <div class="form-group">
+          <label class="form-label" for="modal-sensor-select">Sensor ID</label>
+          <select id="modal-sensor-select" class="form-control">
+            <option value="" disabled selected>Loading sensors from your sheet…</option>
+          </select>
+          <p class="form-hint">All sensor IDs that have posted data to your Sheet.</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="modal-name-input">Display Name</label>
+          <input type="text" id="modal-name-input" class="form-control"
+                 placeholder="e.g. Lab Bench DHT22" maxlength="48">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="modal-desc-input">Description</label>
+          <input type="text" id="modal-desc-input" class="form-control"
+                 placeholder="e.g. Zone: Server Room — Floor 2" maxlength="80">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Visible Fields</label>
+          <p class="form-hint" style="margin-bottom:0.5rem;">
+            Choose which data fields this page displays. Leave all unselected to show everything.
+          </p>
+          <div class="field-picker" id="modal-field-picker">
+            <span class="text-muted text-sm">Select a Sensor ID first to load fields.</span>
+          </div>
+        </div>
+
+        <div id="modal-error" class="form-error hidden"></div>
+
+      </div>
+    </div>
+
+    <div class="modal__footer">
+      <button class="btn" data-close-modal="page-modal-overlay">Cancel</button>
+      <button class="btn btn--primary" id="modal-save-btn">Save Page</button>
+    </div>
+
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
