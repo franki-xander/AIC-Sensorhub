@@ -17,10 +17,12 @@ export default async function handler(req, res) {
       scope: [
         "https://www.googleapis.com/auth/userinfo.profile",
         "https://www.googleapis.com/auth/userinfo.email",
+        "https://www.googleapis.com/auth/drive.readonly",      // Allows viewing Drive metadata/files
+        "https://www.googleapis.com/auth/spreadsheets"          // Allows viewing and managing Sheets
       ].join(" "),
     };
 
-    const qs = new URLSearchParams(options).toString();
+  const qs = new URLSearchParams(options).toString();
     
     // Redirect the user directly to Google's OAuth screen
     return res.redirect(`${rootUrl}?${qs}`);
