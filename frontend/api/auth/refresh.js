@@ -1,7 +1,7 @@
 // api/auth/refresh.js
 import crypto from "crypto";
-import db from "../_utils/db.js";
-import { issueAccessToken, issueRefreshToken, setRefreshCookie } from "../_utils/auth-helpers.js"; // adjust path/names if needed
+import { pool } from "../_utils/db.js";
+import { issueAccessToken, issueRefreshToken, setRefreshCookie } from "../_utils/auth-helpers.js"; 
 
 export default async function handler(req, res) {
   // Enforce POST method since Vercel forwards all methods to this file
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
 
   const hash = crypto.createHash("sha256").update(raw).digest("hex");
   try {
-    const result = await db.query(
+    const result = await pool.query(
       `DELETE FROM refresh_tokens
        WHERE token_hash = $1 AND expires_at > NOW()
        RETURNING user_id`,
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     }
 
     const userId    = result.rows[0].user_id;
-    const userRes   = await db.query("SELECT * FROM users WHERE id = $1", [userId]);
+    const userRes   = await pool.query("SELECT * FROM users WHERE id = $1", [userId]);
     const user      = userRes.rows[0];
     const newAccess = issueAccessToken(user);
     const newRefresh = await issueRefreshToken(user.id);
