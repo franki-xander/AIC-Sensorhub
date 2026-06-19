@@ -1,6 +1,14 @@
+// api/auth/register.js
+import bcrypt from "bcrypt";
+import db from "../_utils/db.js";
+import { issueAccessToken, issueRefreshToken, setRefreshCookie } from "../_utils/auth-helpers.js"; // adjust path/names if needed
 
-// POST /auth/register
-router.post("/register", async (req, res) => {
+export default async function handler(req, res) {
+  // Enforce POST method
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed." });
+  }
+
   const { email, password, display_name } = req.body;
   if (!email || !password) {
     return res.status(400).json({ error: "Email and password are required." });
@@ -28,4 +36,4 @@ router.post("/register", async (req, res) => {
     console.error("Register error:", err);
     res.status(500).json({ error: "Registration failed. Please try again." });
   }
-});
+}
