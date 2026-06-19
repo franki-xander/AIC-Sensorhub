@@ -6,7 +6,7 @@
 // The [fileId] filename tells Vercel this is a dynamic route.
 // The file ID comes from req.query.fileId
 
-import db from "../../_utils/db.js";
+import { db } from "../../_utils/db.js";
 import { requireAuth } from "../../_utils/session.js";
 
 async function getScriptUrl(userId) {

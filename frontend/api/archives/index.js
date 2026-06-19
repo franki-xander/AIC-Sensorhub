@@ -3,7 +3,7 @@
 // Lists all archive CSV files in the user's Google Drive folder.
 // Drive URLs are stripped — downloads must go through /api/archives/download/[fileId]
 
-import db from "../_utils/db.js";
+import { db } from "../_utils/db.js";
 import { requireAuth } from "../_utils/session.js";
 
 async function getUserData(userId) {

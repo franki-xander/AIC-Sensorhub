@@ -7,7 +7,7 @@
 //   from_date?:        "2024-01-01"   (required when mode = "from_date")
 //   exclude_sensors?:  ["sensor_1"]   (optional array of sensor IDs to skip)
 
-import db from "../_utils/db.js";
+import { db } from "../_utils/db.js";
 import { requireAuth } from "../_utils/session.js";
 
 async function getUserData(userId) {

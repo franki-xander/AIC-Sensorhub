@@ -1,6 +1,6 @@
 // api/index.js
 // Consolidated API Entry Point for Pages and Data
-import db from "./_utils/db.js";
+import { db } from "./_utils/db.js";
 import { requireAuth } from "./_utils/session.js";
 
 async function getScriptUrl(userId) {
