@@ -1,9 +1,9 @@
 // api/_utils/auth-helpers.js
 // Shared helpers used by login, register, OAuth callback, and refresh endpoints.
 
-const jwt    = require("jsonwebtoken");
-const crypto = require("crypto");
-const db     = require("./db");
+import jwt from "jsonwebtoken";
+import crypto from "crypto";
+import { db } from "./db.js"; // Note the .js extension and curly braces to match your new db.js setup
 
 const ACCESS_TOKEN_TTL  = "15m";
 const REFRESH_TOKEN_TTL = 30 * 24 * 60 * 60 * 1000; // 30 days in ms
@@ -59,7 +59,8 @@ function parseCookies(req) {
   );
 }
 
-module.exports = {
+// Export using ES Module named exports
+export {
   issueAccessToken,
   issueRefreshToken,
   setRefreshCookie,

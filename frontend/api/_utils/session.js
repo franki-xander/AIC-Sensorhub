@@ -7,7 +7,7 @@
 //   if (!user) return; // response already sent
 //   // use user.id and user.email
 
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
 function requireAuth(req, res) {
   const header = req.headers["authorization"] || "";
@@ -30,4 +30,4 @@ function requireAuth(req, res) {
   }
 }
 
-module.exports = { requireAuth };
+export { requireAuth };
