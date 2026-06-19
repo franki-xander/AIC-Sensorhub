@@ -1,6 +1,6 @@
 // api/auth/refresh.js
 import crypto from "crypto";
-import { pool } from "../_utils/db.js";
+import { db } from "../_utils/db.js";
 import { issueAccessToken, issueRefreshToken, setRefreshCookie } from "../_utils/auth-helpers.js"; 
 
 export default async function handler(req, res) {
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
 
   const hash = crypto.createHash("sha256").update(raw).digest("hex");
   try {
-    const result = await pool.query(
+    const result = await db.query(
       `DELETE FROM refresh_tokens
        WHERE token_hash = $1 AND expires_at > NOW()
        RETURNING user_id`,
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     }
 
     const userId    = result.rows[0].user_id;
-    const userRes   = await pool.query("SELECT * FROM users WHERE id = $1", [userId]);
+    const userRes   = await db.query("SELECT * FROM users WHERE id = $1", [userId]);
     const user      = userRes.rows[0];
     const newAccess = issueAccessToken(user);
     const newRefresh = await issueRefreshToken(user.id);
