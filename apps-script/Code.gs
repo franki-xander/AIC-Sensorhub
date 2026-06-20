@@ -43,7 +43,7 @@ function doGet(e) {
 
   // ── Return column headers (field names) available for a sensor ────────────
   if (action === "getFields") {
-    const sensorId = param(e, "sensor_id");
+    const sensorId = param(e, "sensor_id") || param(e, "SensorID");
     const sheet    = getOrCreateSheet(ss, TELEMETRY_SHEET);
     const headers  = getHeaders(sheet);
     // Return all headers except Timestamp and SensorID
@@ -53,7 +53,7 @@ function doGet(e) {
 
   // ── Return historical telemetry rows for one sensor ───────────────────────
   if (action === "getData") {
-    const sensorId = param(e, "sensor_id");
+    const sensorId = param(e, "sensor_id") || param(e, "SensorID");
     const hours    = parseInt(e.parameter.hours) || 48;
     const fields   = e.parameter.fields ? e.parameter.fields.split(",") : null; // optional field filter
     const sheet    = getOrCreateSheet(ss, TELEMETRY_SHEET);
@@ -124,7 +124,7 @@ function doGet(e) {
 
   // ── Set the posting interval for a sensor ─────────────────────────────────
   if (action === "setInterval") {
-    const sensorId = param(e, "sensor_id");
+    const sensorId = param(e, "sensor_id") || param(e, "SensorID");
     const value    = parseInt(e.parameter.value);
     const sheet    = getOrCreateSheet(ss, INTERVALS_SHEET);
     if (sheet.getLastRow() === 0) {
