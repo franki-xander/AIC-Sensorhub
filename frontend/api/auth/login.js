@@ -2,7 +2,7 @@
 // Authenticates an email/password user and issues session tokens.
 
 import bcrypt from "bcrypt";
-import db from "../_utils/db.js";
+import { db } from "../_utils/db.js";
 import {
   issueAccessToken,
   issueRefreshToken,

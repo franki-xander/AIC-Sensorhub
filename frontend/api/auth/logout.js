@@ -2,7 +2,7 @@
 // Invalidates the refresh token and clears the cookie.
 
 import crypto from "crypto";
-import db from "../_utils/db.js";
+import { db } from "../_utils/db.js";
 import { clearRefreshCookie, parseCookies } from "../_utils/auth-helpers.js";
 
 export default async function handler(req, res) {

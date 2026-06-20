@@ -283,7 +283,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     verifyBtn.disabled    = true;
     verifyBtn.textContent = "Verifying...";
 
-    const res  = await API.post("/api/account/setup", { script_url: scriptUrl, drive_folder_id: driveFolderId || null });
+    const res  = await API.post("/api/account.js", { script_url: scriptUrl, drive_folder_id: driveFolderId || null });
     const data = await res.json();
 
     verifyBtn.disabled    = false;
