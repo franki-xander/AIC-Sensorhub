@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
   // Inspect the URL path to see which feature the client is requesting
   // On Vercel, req.url includes the path (e.g., "/api?type=data" or we look at query params)
-  const isDataRoute = req.query.route === 'data' || req.url.includes('/data');
+  const isDataRoute = req.query.route === 'data' || req.url && req.url.includes('/data');
 
   // ==========================================================================
   // ── DATA ROUTE LOGIC (Formerly data.js) ───────────────────────────────────
