@@ -8,7 +8,7 @@
     { "source": "/sensor",    "destination": "/sensor.html"    },
     { "source": "/archive",   "destination": "/archive.html"   },
     { "source": "/register",  "destination": "/register.html"  }
-]
+],
   "functions": {
   "api/**/*.js": {
     "maxDuration": 30
