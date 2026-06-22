@@ -5,7 +5,7 @@
 // PATCH  — update display name
 // DELETE — delete account
 
-import db from "./_utils/db.js";
+import { db } from "./_utils/db.js";
 import { requireAuth } from "./_utils/session.js";
 
 export default async function handler(req, res) {

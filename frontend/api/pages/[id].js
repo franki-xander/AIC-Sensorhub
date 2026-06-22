@@ -6,7 +6,7 @@
 // The [id] filename tells Vercel this is a dynamic route.
 // The page ID comes from req.query.id
 
-import db from "../_utils/db.js";
+import { db } from "../_utils/db.js";
 import { requireAuth } from "../_utils/session.js";
 
 export default async function handler(req, res) {
