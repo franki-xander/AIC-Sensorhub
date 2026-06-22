@@ -1,7 +1,7 @@
 // api/auth/refresh.js
 import crypto from "crypto";
 import { db } from "../_utils/db.js";
-import { issueAccessToken, issueRefreshToken, setRefreshCookie } from "../_utils/auth-helpers.js"; 
+import { issueAccessToken, issueRefreshToken, setRefreshCookie, parseCookies} from "../_utils/auth-helpers.js"; 
 
 export default async function handler(req, res) {
   // Enforce POST method since Vercel forwards all methods to this file
@@ -9,7 +9,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed." });
   }
 
-  const raw = req.cookies?.refresh_token;
+  const cookies = parseCookies(req);
+  const raw     = cookies["refresh_token"];  
   if (!raw) return res.status(401).json({ error: "No refresh token." });
 
   const hash = crypto.createHash("sha256").update(raw).digest("hex");

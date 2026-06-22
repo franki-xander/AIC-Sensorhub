@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     deleteItem.addEventListener("click", async (e) => {
       e.preventDefault();
       if (!confirm(`Delete "${page.display_name}"? This only removes the dashboard page — your Sheet data is untouched.`)) return;
-      const res = await API.del(`/api/pages/${page.id}`);
+      const res = await API.del(`/api?id=${page.id}`);
       if (res?.ok) { showToast("Page deleted.", "info"); await loadPages(); }
       else showToast("Delete failed.", "error");
     });
@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!editingPage) {
       res = await API.post("/api/pages", { sensor_id: sensorId, display_name: name, description: desc, visible_fields: fields });
     } else {
-      res = await API.patch(`/api/pages/${editingPage.id}`, { sensor_id: sensorId, display_name: name, description: desc, visible_fields: fields });
+      res = await API.patch(`/api?id=${editingPage.id}`, { sensor_id: sensorId, display_name: name, description: desc, visible_fields: fields });
     }
 
     saveBtn.disabled    = false;

@@ -1,6 +1,6 @@
 // api/auth/register.js
 import bcrypt from "bcrypt";
-import db from "../_utils/db.js";
+import { db } from "../_utils/db.js";
 import { issueAccessToken, issueRefreshToken, setRefreshCookie } from "../_utils/auth-helpers.js"; // adjust path/names if needed
 
 export default async function handler(req, res) {

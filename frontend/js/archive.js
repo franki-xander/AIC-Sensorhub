@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   async function loadSensorExcludeList() {
     excludeList.innerHTML = `<span class="text-muted text-sm">Loading...</span>`;
     try {
-      const res = await API.get("/api?route=data&action=getSensorIds");
+      const res = await API.get("/api?action=getSensorIds");
       allSensorIds = await res.json();
 
       if (!Array.isArray(allSensorIds) || allSensorIds.length === 0) {
