@@ -7,7 +7,9 @@
     { "source": "/setup",     "destination": "/setup.html"     },
     { "source": "/sensor",    "destination": "/sensor.html"    },
     { "source": "/archive",   "destination": "/archive.html"   },
-    { "source": "/register",  "destination": "/register.html"  }
+    { "source": "/register",  "destination": "/register.html"  },
+    { "source": "/api/pages", "destination": "/api/index" },
+    { "source": "/api/data", "destination": "/api/index" }
 ],
   "functions": {
   "api/**/*.js": {
