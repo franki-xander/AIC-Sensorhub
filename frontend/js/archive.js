@@ -55,8 +55,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     excludeList.innerHTML = `<span class="text-muted text-sm">Loading...</span>`;
     try {
       const res = await API.get("/api?action=getSensorIds");
-      allSensorIds = await res.json();
-
+      const rawData = await res.json();
+      allSensorIds = Array.isArray(rawData) ? rawData.map(p => p.SensorID || p.sensorid):[];
       if (!Array.isArray(allSensorIds) || allSensorIds.length === 0) {
         excludeList.innerHTML = `<span class="text-muted text-sm">No sensors found in your sheet yet.</span>`;
         return;
