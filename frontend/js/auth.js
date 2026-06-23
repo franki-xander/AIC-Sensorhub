@@ -2,6 +2,19 @@
 
 document.addEventListener("DOMContentLoaded", async () => {
 
+  const googleBtn = document.getElementById("google-btn");
+  if (googleBtn) {
+    // /api/auth/google redirects to Google's consent screen
+    googleBtn.href = "/api/auth/google";
+  }
+
+  const alreadyLoggedIn = await API.refreshToken();
+  if (alreadyLoggedIn) {
+    const res    = await API.get("/api/account");
+    const data   = await res.json();
+    window.location.href = data.account_status === "pending_setup" ? "/setup" : "/dashboard";
+    return; // stop the rest of auth.js from running
+  }
 
 
   // ── Consume OAuth token from URL fragment if present ──────────────────────
@@ -20,19 +33,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // ── Google OAuth button — points to our Vercel function ───────────────────
-  const googleBtn = document.getElementById("google-btn");
-  if (googleBtn) {
-    // /api/auth/google redirects to Google's consent screen
-    googleBtn.href = "/api/auth/google";
-  }
-
-  const alreadyLoggedIn = await API.refreshToken();
-  if (alreadyLoggedIn) {
-    const res    = await API.get("/api/account");
-    const data   = await res.json();
-    window.location.href = data.account_status === "pending_setup" ? "/setup" : "/dashboard";
-    return; // stop the rest of auth.js from running
-  }
 
   // ── Email/password login ──────────────────────────────────────────────────
   const loginBtn   = document.getElementById("login-btn");
