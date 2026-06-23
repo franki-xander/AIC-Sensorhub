@@ -4,6 +4,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // ── Consume OAuth token from URL fragment if present ──────────────────────
   const fragmentToken = consumeTokenFromFragment();
+  if (alreadyLoggedIn) {
+    const res    = await API.get("/api/account");
+    const data   = await res.json();
+    window.location.href = data.account_status === "pending_setup" ? "/setup" : "/dashboard";
+    return; // stop the rest of auth.js from running
+  }
+
   if (fragmentToken) {
     setAccessToken(fragmentToken);
     const res  = await API.get("/api/account");
