@@ -9,7 +9,8 @@
     { "source": "/archive",   "destination": "/archive.html"   },
     { "source": "/register",  "destination": "/register.html"  },
     { "source": "/api/pages", "destination": "/api/index" },
-    { "source": "/api/data", "destination": "/api/index" }
+    { "source": "/api/data", "destination": "/api/index" },
+    { "source": "/terms", "destination": "/terms.html" }
 ],
   "functions": {
   "api/**/*.js": {
