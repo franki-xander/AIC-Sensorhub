@@ -37,19 +37,19 @@
 // =============================================================================
 
 // Your WiFi network name (case-sensitive)
-const char* WIFI_SSID     = "YOUR_WIFI_NAME";
+const char* WIFI_SSID     = "STARLINK";
 
 // Your WiFi password
-const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";
+const char* WIFI_PASSWORD = "";
 
 // Your Google Apps Script ID
 // Find this in your Web App URL: .../macros/s/THIS_PART_HERE/exec
-const String GOOGLE_SCRIPT_ID = "YOUR_SCRIPT_ID_HERE";
+const String GOOGLE_SCRIPT_ID = "AKfycbz5y7VqbIuxyIFUdPKiEATPJBm5xoTeP4uuBHlEf9ZXwe68RgyXgDsly10paeJ0D8yT";
 
 // A unique identifier for this specific device.
 // This is how the Sensorhub dashboard tells your devices apart.
 // Use only letters, numbers, and underscores — no spaces.
-const String SENSOR_ID = "dht22_sensor_1";
+const String SENSOR_ID = "dht22_sensor";
 
 // How many minutes between each data upload (default: 5).
 // The dashboard can change this remotely without reflashing.
@@ -140,13 +140,12 @@ bool readSensorData(JsonDocument& doc) {
     return false;
   }
 
-  // Uses ArduinoJson 6 compatibility helper set() to perfectly match template architecture
-  doc.set("temperature_c", temperature);
-  doc.set("humidity_pct",  humidity);
+  doc["temperature_c"] = temperature;
+  doc["humidity_pct"] = humidity;
 
   // Optional calculated field
   float heatIndex = dht.computeHeatIndex(temperature, humidity, false);
-  doc.set("heat_index_c", heatIndex);
+  doc["heat_index_c"] = heatIndex;
 
   Serial.printf("  Temperature : %.2f °C\n", temperature);
   Serial.printf("  Humidity    : %.2f %%\n", humidity);
