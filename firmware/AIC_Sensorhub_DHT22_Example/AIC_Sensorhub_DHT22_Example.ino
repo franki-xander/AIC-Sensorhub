@@ -37,14 +37,14 @@
 // =============================================================================
 
 // Your WiFi network name (case-sensitive)
-const char* WIFI_SSID     = "STARLINK";
+const char* WIFI_SSID     = "WIFI_NAME";
 
 // Your WiFi password
-const char* WIFI_PASSWORD = "";
+const char* WIFI_PASSWORD = "WIFI_PASSWORD";
 
 // Your Google Apps Script ID
 // Find this in your Web App URL: .../macros/s/THIS_PART_HERE/exec
-const String GOOGLE_SCRIPT_ID = "AKfycbz5y7VqbIuxyIFUdPKiEATPJBm5xoTeP4uuBHlEf9ZXwe68RgyXgDsly10paeJ0D8yT";
+const String GOOGLE_SCRIPT_ID = "THIS_PART_HERE";
 
 // A unique identifier for this specific device.
 // This is how the Sensorhub dashboard tells your devices apart.
